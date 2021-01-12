@@ -13,6 +13,7 @@
 # This script handles updating $DISPLAY within vim also
 # If you're using Neovim, remove the :xrestore line
 
+tmux set-option -wg monitor-activity off
 NEW_DISPLAY=$(tmux show-env | sed -n 's/^DISPLAY=//p')
 tmux list-panes -s -F "#{session_name}:#{window_index}.#{pane_index} #{pane_current_command}" | \
 while read pane_process
@@ -26,3 +27,4 @@ do
         tmux send-keys -t ${pane_process[0]} ":xrestore" Enter
     fi
 done
+tmux set-option -wg monitor-activity on
