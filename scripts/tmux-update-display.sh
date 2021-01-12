@@ -13,18 +13,35 @@
 # This script handles updating $DISPLAY within vim also
 # If you're using Neovim, remove the :xrestore line
 
-tmux set-option -wg monitor-activity off
 NEW_DISPLAY=$(tmux show-env | sed -n 's/^DISPLAY=//p')
+
+# check if lljbash/zsh-renew-tmux-env installed
+if [[ ! -z $(type zsh 2>/dev/null) ]]; then
+    HAS_RENEW=$(zsh -ci 'type renew_tmux_env | grep function')
+else
+    HAS_RENEW=
+fi
+
+tmux set-option -wg monitor-activity off
+tmux set-option -wg monitor-bell off
 tmux list-panes -s -F "#{session_name}:#{window_index}.#{pane_index} #{pane_current_command}" | \
 while read pane_process
 do
     IFS=' ' read -ra pane_process <<< "$pane_process"
-    if [[ "${pane_process[1]}" == "zsh" || "${pane_process[1]}" == "bash" ]]; then
-        tmux send-keys -t ${pane_process[0]} "export DISPLAY=$NEW_DISPLAY" Enter
+    if [[ "${pane_process[1]}" == "bash" ]]; then
+        tmux send-keys -t ${pane_process[0]} ^E ^U "export DISPLAY=$NEW_DISPLAY" Enter ^Y ^E
+    elif [[ "${pane_process[1]}" == "zsh" ]]; then
+        if [[ ! -z $HAS_RENEW ]]; then
+            tmux send-keys -t ${pane_process[0]} Escape ^T
+        else
+            tmux send-keys -t ${pane_process[0]} ^E ^U "export DISPLAY=$NEW_DISPLAY" Enter ^Y ^E
+        fi
     elif [[ "${pane_process[1]}" == *"vi"* ]]; then
-        tmux send-keys -t ${pane_process[0]} Escape
+        tmux send-keys -t ${pane_process[0]} Escape Escape Escape
         tmux send-keys -t ${pane_process[0]} ":let \$DISPLAY = \"$NEW_DISPLAY\"" Enter
-        tmux send-keys -t ${pane_process[0]} ":xrestore" Enter
+        tmux send-keys -t ${pane_process[0]} ":xrestore" Enter ^L
     fi
 done
+sleep 3
 tmux set-option -wg monitor-activity on
+tmux set-option -wg monitor-bell on
