@@ -1,4 +1,4 @@
-# tmux update DISPLAY
+# tmux update $DISPLAY
 
 Inspired by https://gist.github.com/mikeboiko/b6e50210b4fb351b036f1103ea3c18a9.
 
@@ -20,7 +20,7 @@ If you're using Neovim, remove the :xrestore line.
 
 ## Recommendation
 
-Install [zsh-renew-tmux-env](https://github.com/lljbash/zsh-renew-tmux-env) for zsh users to update DISPLAY silently.
+Install [zsh-renew-tmux-env](https://github.com/lljbash/zsh-renew-tmux-env) for zsh users to update $DISPLAY silently.
 
 ## Installation
 ### Installation with [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) (recommended)
