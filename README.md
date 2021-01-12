@@ -1,4 +1,4 @@
-# Tmux update DISPLAY
+# tmux update DISPLAY
 
 Inspired by https://gist.github.com/mikeboiko/b6e50210b4fb351b036f1103ea3c18a9.
 
