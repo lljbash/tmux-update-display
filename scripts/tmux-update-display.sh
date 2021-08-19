@@ -28,6 +28,10 @@ tmux list-panes -s -F "#{session_name}:#{window_index}.#{pane_index} #{pane_curr
 while read pane_process
 do
     IFS=' ' read -ra pane_process <<< "$pane_process"
+    # https://github.com/lljbash/tmux-update-display/issues/2
+    if [[ "${pane_process[0]}" == p* ]]; then
+        break
+    fi
     if [[ "${pane_process[1]}" == "bash" ]]; then
         tmux send-keys -t ${pane_process[0]} ^E ^U "export DISPLAY=$NEW_DISPLAY" Enter ^Y ^E
     elif [[ "${pane_process[1]}" == "zsh" ]]; then
