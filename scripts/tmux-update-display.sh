@@ -39,7 +39,7 @@ do
     elif [[ "${pane_process[1]}" == *"vi"* ]]; then
         tmux send-keys -t ${pane_process[0]} Escape Escape Escape
         tmux send-keys -t ${pane_process[0]} ":let \$DISPLAY = \"$NEW_DISPLAY\"" Enter
-        tmux send-keys -t ${pane_process[0]} ":xrestore" Enter ^L
+        tmux send-keys -t ${pane_process[0]} ":execute exists(':xrestore') ? 'xrestore' : ''" Enter ^L
     fi
 done
 sleep 3
