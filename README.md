@@ -16,8 +16,6 @@ When attaching to tmux session, update $DISPLAY for each tmux pane in that sessi
 
 This script handles updating $DISPLAY within vim also.
 
-If you're using Neovim, remove the :xrestore line.
-
 ## Recommendation
 
 Install [zsh-renew-tmux-env](https://github.com/lljbash/zsh-renew-tmux-env) for zsh users to update $DISPLAY silently.

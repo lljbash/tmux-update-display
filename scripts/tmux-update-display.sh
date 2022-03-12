@@ -11,7 +11,6 @@
 # When attaching to tmux session, update $DISPLAY for each tmux pane in that session
 # This is performed by using tmux send-keys to the shell.
 # This script handles updating $DISPLAY within vim also
-# If you're using Neovim, remove the :xrestore line
 
 NEW_DISPLAY=$(tmux show-env | sed -n 's/^DISPLAY=//p')
 
