@@ -41,6 +41,6 @@ do
         tmux send-keys -t ${pane_process[0]} ":execute exists(':xrestore') ? 'xrestore' : ''" Enter ^L
     fi
 done
-sleep 3
+sleep 30
 tmux set-option -wg monitor-activity on
 tmux set-option -wg monitor-bell on
