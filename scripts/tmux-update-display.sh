@@ -35,7 +35,7 @@ do
         else
             tmux send-keys -t ${pane_process[0]} ^E ^U "export DISPLAY=$NEW_DISPLAY" Enter ^Y ^E
         fi
-    elif [[ "${pane_process[1]}" == *"vi"* ]]; then
+    elif [[ "${pane_process[1]}" =~ '^n?vim?$' ]]; then
         tmux send-keys -t ${pane_process[0]} Escape Escape Escape
         tmux send-keys -t ${pane_process[0]} ":let \$DISPLAY = \"$NEW_DISPLAY\"" Enter
         tmux send-keys -t ${pane_process[0]} ":execute exists(':xrestore') ? 'xrestore' : ''" Enter ^L
