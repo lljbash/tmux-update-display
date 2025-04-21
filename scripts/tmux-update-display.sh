@@ -23,6 +23,7 @@ fi
 
 tmux set-option -wg monitor-activity off
 tmux set-option -wg monitor-bell off
+sleep 1
 tmux list-panes -s -F "#{session_name}:#{window_index}.#{pane_index} #{pane_current_command}" | \
 while read pane_process
 do
@@ -41,6 +42,6 @@ do
         tmux send-keys -t ${pane_process[0]} ":execute exists(':xrestore') ? 'xrestore' : ''" Enter ^L
     fi
 done
-sleep 30
+sleep 2
 tmux set-option -wg monitor-activity on
 tmux set-option -wg monitor-bell on
